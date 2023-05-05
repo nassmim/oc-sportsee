@@ -1,11 +1,12 @@
 import Header from "./components/Header.jsx"
-import { Outlet } from "react-router-dom"
+import MainContainer from "./components/MainContainer.jsx"
+import "./css/index.css"
 
 function App() {
   return (
     <>
       <Header />
-      <Outlet />
+      <MainContainer />
     </>
   )
 }
