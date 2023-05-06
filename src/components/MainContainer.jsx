@@ -7,7 +7,9 @@ export default function MainContainer() {
     <>
       <main className={mainContainerCSS.main}>
         <Sidebar />
-        <Outlet />
+        <div className={mainContainerCSS.outlet}>
+          <Outlet />
+        </div>
       </main>
     </>
   )
