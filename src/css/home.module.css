@@ -1,3 +1,7 @@
+.welcome {
+  margin-bottom: 75px;
+}
+
 .welcomeTitle {
   font-size: 48px;
   margin-bottom: 25px;
@@ -7,7 +11,28 @@
   color: red;
 }
 
-.greetings {
+.welcomeGreetings {
   font-size: 18px;
   font-weight: 400;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.charts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 55% 45%;
+  column-gap: 30px;
+}
+
+.dailyActivity {
+  grid-column: 1/4;
+}
+
+.macroStats {
+  display: flex;
+  flex-direction: column;
 }

@@ -5,12 +5,12 @@ import { Outlet } from "react-router-dom"
 export default function MainContainer() {
   return (
     <>
-      <main className={mainContainerCSS.main}>
+      <div className={mainContainerCSS.container}>
         <Sidebar />
         <div className={mainContainerCSS.outlet}>
           <Outlet />
         </div>
-      </main>
+      </div>
     </>
   )
 }

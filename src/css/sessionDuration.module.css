@@ -1,0 +1,26 @@
+.container {
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 258px;
+  aspect-ratio: 258/263;
+  background-color: #ff0000;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.title {
+  width: 57%;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 24px;
+  color: #fff;
+  padding: 11% 0px 2px 9%;
+  opacity: 0.5;
+}
+
+.chart {
+  display: block;
+  width: 100%;
+  overflow: visible;
+}

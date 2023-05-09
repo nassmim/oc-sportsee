@@ -1,8 +1,9 @@
-.main {
+.container {
   display: flex;
 }
 
 .outlet {
+  width: 100%;
   padding-top: 55px;
   padding-left: 110px;
   padding-right: 90px;
