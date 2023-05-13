@@ -1,4 +1,4 @@
-import BarChart from "../components/BarChart.jsx"
+import RadialChart from "../components/RadialChart.jsx"
 import SessionDurationChart from "../components/SessionDurationChart.jsx"
 import homeCSS from "../css/home.module.css"
 import {
@@ -12,6 +12,7 @@ export default function Home() {
   const sessionDurations = USER_AVERAGE_SESSIONS[0].sessions.map(
     (session) => session.sessionLength
   )
+  const score = (USER_MAIN_DATA[0].todayScore || USER_MAIN_DATA[0].score) * 100
 
   return (
     <>
@@ -28,14 +29,14 @@ export default function Home() {
           <section className={homeCSS.dailyActivity}>
             <SessionDurationChart data={sessionDurations} />
           </section>
-          <section>
+          <section className={homeCSS.dailyActivity}>
             <SessionDurationChart data={sessionDurations} />
           </section>
-          <section>
+          <section className={homeCSS.dailyActivity}>
             <SessionDurationChart data={sessionDurations} />
           </section>
-          <section>
-            <SessionDurationChart data={sessionDurations} />
+          <section className={homeCSS.dailyActivity}>
+            <RadialChart score={score} />
           </section>
         </main>
         <aside className={homeCSS.macroStats}>MACROSTATS</aside>
