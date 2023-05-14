@@ -11,9 +11,6 @@ const Container = styled.div`
   background: #fbfbfb;
   border-radius: 5px;
   overflow: hidden;
-
-  &::before {
-  }
 `
 const Title = styled.h2`
   font-size: 15px;
@@ -77,8 +74,6 @@ export default function RadialChart({ score }) {
       <ResponsiveContainerStyled>
         <RadialBarChart
           data={chartData}
-          width={800}
-          height={350}
           innerRadius="69%"
           startAngle={90}
           endAngle={endAngle}

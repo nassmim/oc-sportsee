@@ -1,5 +1,6 @@
-import RadialChart from "../components/RadialChart.jsx"
+import BarChart from "../components/BarChart.jsx"
 import SessionDurationChart from "../components/SessionDurationChart.jsx"
+import RadialChart from "../components/RadialChart.jsx"
 import homeCSS from "../css/home.module.css"
 import {
   USER_MAIN_DATA,
@@ -27,15 +28,15 @@ export default function Home() {
       <div className={homeCSS.container}>
         <main className={homeCSS.charts}>
           <section className={homeCSS.dailyActivity}>
+            <BarChart data={USER_ACTIVITY[0]} />
+          </section>
+          <section>
             <SessionDurationChart data={sessionDurations} />
           </section>
-          <section className={homeCSS.dailyActivity}>
+          <section>
             <SessionDurationChart data={sessionDurations} />
           </section>
-          <section className={homeCSS.dailyActivity}>
-            <SessionDurationChart data={sessionDurations} />
-          </section>
-          <section className={homeCSS.dailyActivity}>
+          <section>
             <RadialChart score={score} />
           </section>
         </main>
