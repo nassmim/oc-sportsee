@@ -22,14 +22,18 @@
 }
 
 .charts {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 55% 45%;
+  display: flex;
+  flex-direction: column;
   gap: 30px;
 }
 
 .dailyActivity {
   grid-column: 1/4;
+}
+
+.chartsBottom {
+  display: flex;
+  justify-content: space-between;
 }
 
 .macroStats {

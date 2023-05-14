@@ -30,15 +30,17 @@ export default function Home() {
           <section className={homeCSS.dailyActivity}>
             <BarChart data={USER_ACTIVITY[0]} />
           </section>
-          <section>
-            <SessionDurationChart data={sessionDurations} />
-          </section>
-          <section>
-            <SessionDurationChart data={sessionDurations} />
-          </section>
-          <section>
-            <RadialChart score={score} />
-          </section>
+          <div className={homeCSS.chartsBottom}>
+            <section>
+              <SessionDurationChart data={sessionDurations} />
+            </section>
+            <section>
+              <SessionDurationChart data={sessionDurations} />
+            </section>
+            <section>
+              <RadialChart score={score} />
+            </section>
+          </div>
         </main>
         <aside className={homeCSS.macroStats}>MACROSTATS</aside>
       </div>
