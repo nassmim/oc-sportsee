@@ -19,7 +19,7 @@ export default function Sidebar() {
     },
     {
       path: sessionLengthIcon,
-      id: "session-length",
+      id: "session-duration",
       alt: "Swimming",
       style: {
         width: "50%",
@@ -28,7 +28,7 @@ export default function Sidebar() {
     },
     {
       path: statsIcon,
-      id: "stats",
+      id: "performance",
       alt: "Cycling",
       style: {
         width: "59%",
@@ -53,7 +53,7 @@ export default function Sidebar() {
           <ul className={sidebarCSS.menuItems}>
             {icons.map((icon, index) => (
               <li key={icon.id} className={sidebarCSS.menuItem}>
-                <Link to={`/#${icon.id}`} className={sidebarCSS.link}>
+                <Link to={`/profile#${icon.id}`} className={sidebarCSS.link}>
                   <ActivityIcon img={icon.path} style={icon.style} />
                 </Link>
               </li>
