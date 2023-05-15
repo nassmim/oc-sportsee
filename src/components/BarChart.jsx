@@ -98,13 +98,13 @@ export default function BarChartCustom({ data }) {
     return null
   }
 
-  const TooltipCursorCustom = ({ x, y, width, height, stroke, ...rest }) => {
-    const widthCustom = 55
-    // const xCustom =
+  const TooltipCursorCustom = ({ x, y, height }) => {
+    const widthCustom = 56
+    const translateX = 21
     return (
       <Rectangle
         fill="#C4C4C480"
-        x={x + 35}
+        x={x + translateX}
         y={y}
         width={widthCustom}
         height={height}
@@ -156,10 +156,7 @@ export default function BarChartCustom({ data }) {
           <Tooltip
             content={renderTooltipCustom}
             cursor={<TooltipCursorCustom />}
-            // viewBox={{ width: 39, height: 63 }}
             offset={20}
-            // contentStyle={{ background: "#E60000" }}
-            // wrapperStyle={{ color: "#fff" }}
           />
           <Legend
             verticalAlign="top"
