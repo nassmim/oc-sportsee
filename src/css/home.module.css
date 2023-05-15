@@ -24,19 +24,25 @@
 .charts {
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  row-gap: 30px;
+  width: 75%;
 }
 
 .dailyActivity {
-  grid-column: 1/4;
+  width: 100%;
 }
 
 .chartsBottom {
   display: flex;
-  justify-content: space-between;
+  column-gap: 30px;
+}
+
+.chartBottom {
+  width: 100%;
 }
 
 .macroStats {
   display: flex;
   flex-direction: column;
+  width: 23%;
 }

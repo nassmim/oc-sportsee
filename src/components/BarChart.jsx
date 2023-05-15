@@ -7,6 +7,7 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  Rectangle,
 } from "recharts"
 
 import styled from "styled-components"
@@ -76,7 +77,7 @@ export default function BarChartCustom({ data }) {
     )
   }
 
-  const TooltipCustom = ({ active, payload, label }) => {
+  const renderTooltipCustom = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
         <div
@@ -95,6 +96,20 @@ export default function BarChartCustom({ data }) {
     }
 
     return null
+  }
+
+  const TooltipCursorCustom = ({ x, y, width, height, stroke, ...rest }) => {
+    const widthCustom = 55
+    // const xCustom =
+    return (
+      <Rectangle
+        fill="#C4C4C480"
+        x={x + 35}
+        y={y}
+        width={widthCustom}
+        height={height}
+      />
+    )
   }
 
   return (
@@ -135,11 +150,12 @@ export default function BarChartCustom({ data }) {
             axisLine={false}
             tickLine={false}
             tick={{ fill: "#9B9EAC", fontSize: "14px", fontWeight: 500 }}
-            dx={45}
+            dx={40}
           />
           <YAxis yAxisId="calories" type="number" scale={"sqrt"} hide={true} />
           <Tooltip
-            content={TooltipCustom}
+            content={renderTooltipCustom}
+            cursor={<TooltipCursorCustom />}
             // viewBox={{ width: 39, height: 63 }}
             offset={20}
             // contentStyle={{ background: "#E60000" }}

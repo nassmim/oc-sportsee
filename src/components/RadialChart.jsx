@@ -6,7 +6,6 @@ const Container = styled.div`
   position: relative;
   box-sizing: border-box;
   width: 100%;
-  max-width: 258px;
   aspect-ratio: 258/263;
   background: #fbfbfb;
   border-radius: 5px;
