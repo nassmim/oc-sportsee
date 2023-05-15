@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import {
   LineChart,
   Line,
@@ -29,6 +29,7 @@ const Container = styled.div`
 export default function SessionDurationChart({ data }) {
   const [leftLabel, setLeftLabel] = useState(6)
   const [isAreaSelected, setIsAreaSelected] = useState(false)
+  const [avgDuration, setAvgDuration] = useState(0)
 
   const days = ["L", "M", "M", "J", "V", "S", "D"]
 
@@ -102,7 +103,12 @@ export default function SessionDurationChart({ data }) {
   const ReferenceAreaCustom = (props) => {
     return (
       <g>
-        <rect x={props.x} width={"31%"} height={"100%"} opacity={0.5} />
+        <rect x={props.x} width={"31%"} height={"100%"} opacity={0.5}></rect>
+        {avgDuration && (
+          <text x={props.x + 10} y="50%" fontSize="10" fill="#fff">
+            {avgDuration} mn
+          </text>
+        )}
       </g>
     )
   }
@@ -114,13 +120,28 @@ export default function SessionDurationChart({ data }) {
   }
 
   const stopAreaSelection = (e) => {
-    if (!isAreaSelected) {
-      return
-    } else {
+    if (!isAreaSelected) return
+    else {
       setIsAreaSelected(false)
       setLeftLabel(e?.activeLabel)
     }
   }
+
+  useEffect(() => {
+    if (leftLabel === 7) {
+      setAvgDuration(null)
+      return
+    }
+
+    const sessionsSelected = data.slice(leftLabel - 1, leftLabel + 2)
+
+    const totalDuration = sessionsSelected.reduce(
+      (totalDuration, session) => totalDuration + session.sessionLength,
+      0
+    )
+    const average = Math.ceil(totalDuration / sessionsSelected.length)
+    setAvgDuration(average)
+  }, [leftLabel])
 
   return (
     <Container>
@@ -143,7 +164,12 @@ export default function SessionDurationChart({ data }) {
             padding={{ left: 15, right: 15 }}
           />
           <YAxis hide={true} />
-          <Tooltip axisLine={false} content={renderTooltipCustom} />
+          <Tooltip
+            axisLine={false}
+            content={renderTooltipCustom}
+            cursor={false}
+            labelStyle={{ boxShadow: 30 }}
+          />
           <Legend
             verticalAlign="top"
             align="left"
@@ -156,6 +182,7 @@ export default function SessionDurationChart({ data }) {
             strokeWidth={2}
             opacity={0.5}
             dot={false}
+            activeDot={{ strokeWidth: 1, boxShadow: "20px 10px 5px" }}
           />
           <ReferenceArea
             x1={leftLabel}
