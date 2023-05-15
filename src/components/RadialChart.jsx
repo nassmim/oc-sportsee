@@ -1,4 +1,9 @@
-import { RadialBarChart, RadialBar, ResponsiveContainer } from "recharts"
+import {
+  RadialBarChart,
+  RadialBar,
+  ResponsiveContainer,
+  Legend,
+} from "recharts"
 
 import styled from "styled-components"
 
@@ -11,12 +16,6 @@ const Container = styled.div`
   border-radius: 5px;
   overflow: hidden;
 `
-const Title = styled.h2`
-  font-size: 15px;
-  font-weight: 500;
-  padding: 11% 0px 3px 9%;
-`
-
 const PerformanceResults = styled.p`
   position: absolute;
   left: 50%;
@@ -37,7 +36,6 @@ const PerformanceResults = styled.p`
 
 const ResponsiveContainerStyled = styled(ResponsiveContainer)`
   position: relative;
-  transform: translateY(-20%);
   &::before {
     content: "";
     position: absolute;
@@ -62,9 +60,23 @@ export default function RadialChart({ score }) {
 
   const endAngle = 90 + (score * 360) / 100
 
+  const renderLegendCustom = (props) => {
+    return (
+      <p
+        style={{
+          position: "absolute",
+          fontSize: "15px",
+          fontWeight: 500,
+          padding: "10px 0px 10px 20px",
+        }}
+      >
+        Score
+      </p>
+    )
+  }
+
   return (
     <Container>
-      <Title>Score</Title>
       <PerformanceResults>
         {score}
         <br />
@@ -84,6 +96,7 @@ export default function RadialChart({ score }) {
             clockWise={true}
             dataKey="score"
           />
+          <Legend content={renderLegendCustom} verticalAlign="top" />
         </RadialBarChart>
       </ResponsiveContainerStyled>
     </Container>

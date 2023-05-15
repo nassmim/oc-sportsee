@@ -11,9 +11,6 @@ import {
 } from "../mocks/data.js"
 
 export default function Home() {
-  const sessionDurations = USER_AVERAGE_SESSIONS[0].sessions.map(
-    (session) => session.sessionLength
-  )
   const score = (USER_MAIN_DATA[0].todayScore || USER_MAIN_DATA[0].score) * 100
 
   return (
@@ -34,7 +31,7 @@ export default function Home() {
 
           <div className={homeCSS.chartsBottom}>
             <section className={homeCSS.chartBottom}>
-              <SessionDurationChart data={sessionDurations} />
+              <SessionDurationChart data={USER_AVERAGE_SESSIONS[0].sessions} />
             </section>
             <section className={homeCSS.chartBottom}>
               <RadarChart performances={USER_PERFORMANCE[0]} />

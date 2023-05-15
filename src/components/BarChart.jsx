@@ -84,13 +84,13 @@ export default function BarChartCustom({ data }) {
           style={{
             zIndex: 2,
             backgroundColor: "#E60000",
-            fontSize: "7px",
+            fontSize: "10px",
             color: "#fff",
             padding: "10px",
           }}
         >
           <p style={{ paddingBottom: 25 }}>{`${payload[0].value}kg`}</p>
-          <p>{`${payload[1].value}kg`}</p>
+          <p>{`${payload[1].value}Kcal`}</p>
         </div>
       )
     }
