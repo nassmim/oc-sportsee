@@ -35,9 +35,9 @@
 
 .chartsBottom {
   display: flex;
-  column-gap: 30px;
+  justify-content: space-between;
 }
 
 .chartBottom {
-  width: 100%;
+  width: 30%;
 }
