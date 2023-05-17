@@ -42,7 +42,7 @@ export default function Profile() {
             </section>
           </div>
         </main>
-        <Diet />
+        <Diet data={USER_MAIN_DATA[0].keyData} />
       </div>
     </>
   )

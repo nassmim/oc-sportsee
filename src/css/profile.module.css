@@ -19,7 +19,7 @@
 .container {
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: stretch;
 }
 
 .charts {
@@ -40,10 +40,4 @@
 
 .chartBottom {
   width: 100%;
-}
-
-.macroStats {
-  display: flex;
-  flex-direction: column;
-  width: 23%;
 }

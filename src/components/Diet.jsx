@@ -7,7 +7,8 @@ import cheesburger from "../assets/images/stats/cheeseburger.svg"
 import styled from "styled-components"
 
 const Container = styled.aside`
-  width: 23%;
+  width: 25%;
+  padding-left: 2.5%;
 `
 
 const Foods = styled.ul`
@@ -16,17 +17,20 @@ const Foods = styled.ul`
   align-items: center;
   width: 100%;
   height: 100%;
-  // row-gap: 20px;
 `
 
 const FoodItem = styled.li`
+  display: flex;
+  flex-direction: column;
   flex-grow: 1;
   width: 100%;
 `
 
-export default function Diet() {
+export default function Diet({ data }) {
   const icons = [
     {
+      data: data.calorieCount,
+      units: "kCal",
       path: energyIcon,
       alt: "Calories",
       style: {
@@ -35,11 +39,13 @@ export default function Diet() {
           aspectRatio: "16/20",
         },
         container: {
-          fill: "#FF0000",
+          backgroundColor: "#fbeaeb",
         },
       },
     },
     {
+      data: data.proteinCount,
+      units: "kCal",
       path: chickenIcon,
       alt: "Protéines",
       style: {
@@ -48,11 +54,13 @@ export default function Diet() {
           aspectRatio: "1/1",
         },
         container: {
-          fill: "#4AB8FF1A",
+          backgroundColor: "#4AB8FF1A",
         },
       },
     },
     {
+      data: data.carbohydrateCount,
+      units: "kCal",
       path: appleIcon,
       alt: "Glucides",
       style: {
@@ -61,11 +69,13 @@ export default function Diet() {
           aspectRatio: "17/20",
         },
         container: {
-          fill: "#F9CE23",
+          backgroundColor: "#FBF6E5",
         },
       },
     },
     {
+      data: data.lipidCount,
+      units: "kCal",
       path: cheesburger,
       alt: "Lipides",
       style: {
@@ -74,7 +84,7 @@ export default function Diet() {
           aspectRatio: "1/1",
         },
         container: {
-          fill: "#FD51811A",
+          backgroundColor: "#fbeaeb",
         },
       },
     },
@@ -86,7 +96,7 @@ export default function Diet() {
         <Foods>
           {icons.map((icon, index) => (
             <FoodItem key={index}>
-              <FoodIcon img={icon.path} style={icon.style} />
+              <FoodIcon icon={icon} />
             </FoodItem>
           ))}
         </Foods>
