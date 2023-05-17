@@ -14,6 +14,7 @@ const Container = styled.aside`
 const Foods = styled.ul`
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 100%;
@@ -22,7 +23,6 @@ const Foods = styled.ul`
 const FoodItem = styled.li`
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
   width: 100%;
 `
 

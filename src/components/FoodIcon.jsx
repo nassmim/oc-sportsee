@@ -6,11 +6,10 @@ const Container = styled.div`
   align-items: center;
   column-gap: 10%;
   box-sizing: border-box;
-  flex-grow: 1;
   width: 100%;
   aspect-ratio: 258/124;
   max-width: 258px;
-  padding: 30px;
+  padding: 2% 30px;
   border-radius: 5px;
   background-color: #fbfbfb;
 `
