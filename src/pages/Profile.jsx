@@ -1,9 +1,13 @@
+import { useEffect, useState } from "react"
+import userAPI from "../api/user.js"
+
 import Diet from "../components/Diet.jsx"
 import BarChart from "../components/BarChart.jsx"
 import SessionDurationChart from "../components/SessionDurationChart.jsx"
 import RadarChart from "../components/RadarChart.jsx"
 import RadialChart from "../components/RadialChart.jsx"
 import profileCSS from "../css/profile.module.css"
+
 import {
   USER_MAIN_DATA,
   USER_ACTIVITY,
@@ -12,7 +16,32 @@ import {
 } from "../mocks/data.js"
 
 export default function Profile() {
-  const score = (USER_MAIN_DATA[0].todayScore || USER_MAIN_DATA[0].score) * 100
+  const [userId, setUserId] = useState(12)
+  const [userMainData, setUserMainData] = useState({})
+
+  useEffect(() => {
+    const getUserMainData = async () => {
+      let userData = {}
+      try {
+        userData = await userAPI.getUserMainData(userId)
+      } catch (err) {
+        console.log(err)
+        return
+      }
+
+      userData = userData.data
+
+      const score = (userData.todayScore || userData.score) * 100
+      const newUserMainData = {
+        ...userData,
+        score: score,
+      }
+
+      setUserMainData(newUserMainData)
+    }
+
+    getUserMainData()
+  }, [userId])
 
   return (
     <>
@@ -38,7 +67,7 @@ export default function Profile() {
               <RadarChart performances={USER_PERFORMANCE[0]} />
             </section>
             <section id="score" className={profileCSS.chartBottom}>
-              <RadialChart score={score} />
+              <RadialChart score={userMainData.score} />
             </section>
           </div>
         </main>
