@@ -1,15 +1,13 @@
+import PropTypes from "prop-types"
 import { useEffect, useState } from "react"
 import {
   LineChart,
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
   Tooltip,
   Legend,
-  ReferenceLine,
   ResponsiveContainer,
-  Rectangle,
   ReferenceArea,
 } from "recharts"
 
@@ -26,6 +24,11 @@ const Container = styled.div`
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.0212249);
 `
 
+/**
+ *
+ * @param {{ day: Number, sessionLength: Number }[]} data
+ * @returns { ReactComponent } line chart representing the user activity session length per day
+ */
 export default function SessionDurationChart({ data }) {
   const [leftLabel, setLeftLabel] = useState(6)
   const [isAreaSelected, setIsAreaSelected] = useState(false)
@@ -33,6 +36,12 @@ export default function SessionDurationChart({ data }) {
 
   const days = ["L", "M", "M", "J", "V", "S", "D"]
 
+  /**
+   *
+   * @param { {x: Number, y: Number, stroke: String, payload: {}} } tickObject representing the
+   * chart x-axis tick properties at a specific data point
+   * @returns { svgElement } corresponding to the x-axis tick with custom style
+   */
   const XAxisTickCustom = ({ x, y, stroke, payload }) => {
     return (
       <g transform={`translate(${x},${y})`}>
@@ -50,6 +59,14 @@ export default function SessionDurationChart({ data }) {
     )
   }
 
+  /**
+   *
+   * @param { Boolean } active
+   * @param { RechartsElement } payload containing information on the chart specific data point
+   * where the mouse is the closest
+   * @param {} label not used
+   * @returns { DomElement } corresponding to the chart data point tooltip
+   */
   const renderTooltipCustom = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -68,19 +85,10 @@ export default function SessionDurationChart({ data }) {
     return null
   }
 
-  const TooltipCursorCustom = ({ points, width, height }) => {
-    return (
-      <Rectangle
-        fill="#000"
-        x={points[0].x}
-        y={0}
-        height={300}
-        width={79}
-        opacity={0.7}
-      />
-    )
-  }
-
+  /**
+   *
+   * @returns { DomElement } corresponding to the chart legend
+   */
   const LegendTextCustom = () => {
     return (
       <div
@@ -100,12 +108,18 @@ export default function SessionDurationChart({ data }) {
     )
   }
 
-  const ReferenceAreaCustom = (props) => {
+  /**
+   *
+   * @param { Number } x representing the starting position of the chart selection area relative to
+   * the chart container
+   * @returns { DomElement } corresponding to area highlighted in the chart with a custom style
+   */
+  const ReferenceAreaCustom = ({ x }) => {
     return (
       <g>
-        <rect x={props.x} width={"31%"} height={"100%"} opacity={0.5}></rect>
+        <rect x={x} width={"31%"} height={"100%"} opacity={0.5}></rect>
         {avgDuration && (
-          <text x={props.x + 10} y="50%" fontSize="10" fill="#fff">
+          <text x={x + 10} y="50%" fontSize="10" fill="#fff">
             {avgDuration} mn
           </text>
         )}
@@ -113,26 +127,43 @@ export default function SessionDurationChart({ data }) {
     )
   }
 
+  /**
+   *
+   * @param { RechartsElement } activeLabel corresponding to the chart data point that is active
+   * @returns { Void } none
+   */
   const activateSelection = (activeLabel) => {
+    // This check to ensure the user click is within the current selected area.
     if (activeLabel >= leftLabel && activeLabel <= leftLabel + 2) {
       setIsAreaSelected(true)
     }
   }
 
+  /**
+   *
+   * @param { RechartsElement || DomElement } e
+   * @returns { Void } none
+   */
   const stopAreaSelection = (e) => {
     if (!isAreaSelected) return
     else {
+      // Since area has been previously selected with a mouse down and mouse is now up
+      // it means we need to update its new position
       setIsAreaSelected(false)
       setLeftLabel(e?.activeLabel)
     }
   }
 
+  // This function used to calculate the average session duration based on the user selection
   useEffect(() => {
     if (leftLabel === 7) {
+      // Area must not go outside the graph, so if we are at the last data point
+      // we reset the area position
       setAvgDuration(null)
       return
     }
 
+    // Retrieves the data points within the selection (selection width fixed and corresponds to 2 data points)
     const sessionsSelected = data.slice(leftLabel - 1, leftLabel + 2)
 
     const totalDuration = sessionsSelected.reduce(
@@ -193,4 +224,8 @@ export default function SessionDurationChart({ data }) {
       </ResponsiveContainer>
     </Container>
   )
+}
+
+SessionDurationChart.propTypes = {
+  data: PropTypes.array,
 }

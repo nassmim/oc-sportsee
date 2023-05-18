@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import {
   RadialBarChart,
   RadialBar,
@@ -48,7 +49,11 @@ const ResponsiveContainerStyled = styled(ResponsiveContainer)`
     border-radius: 50%;
   }
 `
-
+/**
+ *
+ * @param { Number } score
+ * @returns { ReactComponent } radial bar chart corresponding to the user objectives progression
+ */
 export default function RadialChart({ score }) {
   const chartData = [
     {
@@ -58,6 +63,7 @@ export default function RadialChart({ score }) {
     },
   ]
 
+  // Starting position of the arc is at 90°, so we must add it to derive the end position
   const endAngle = 90 + (score * 360) / 100
 
   const renderLegendCustom = (props) => {
@@ -101,4 +107,8 @@ export default function RadialChart({ score }) {
       </ResponsiveContainerStyled>
     </Container>
   )
+}
+
+RadialChart.propTypes = {
+  score: PropTypes.number,
 }

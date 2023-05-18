@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import FoodIcon from "./FoodIcon.jsx"
 import energyIcon from "../assets/images/stats/energy.svg"
 import chickenIcon from "../assets/images/stats/chicken.svg"
@@ -26,6 +27,12 @@ const FoodItem = styled.li`
   width: 100%;
 `
 
+/**
+ *
+ * @param {{calorieCount: Number, proteinCount: Number, carbohydrateCount: Number
+ * , lipidCount: Number }} data
+ * @returns { ReactComponent } representing the right sidebar with the user key diet stats
+ */
 export default function Diet({ data }) {
   const icons = [
     {
@@ -103,4 +110,8 @@ export default function Diet({ data }) {
       </Container>
     </>
   )
+}
+
+Diet.propTypes = {
+  data: PropTypes.object,
 }
