@@ -8,17 +8,12 @@ import RadarChart from "../components/RadarChart.jsx"
 import RadialChart from "../components/RadialChart.jsx"
 import profileCSS from "../css/profile.module.css"
 
-import {
-  USER_MAIN_DATA,
-  USER_ACTIVITY,
-  USER_AVERAGE_SESSIONS,
-  USER_PERFORMANCE,
-} from "../mocks/data.js"
-
 export default function Profile() {
   const [userId, setUserId] = useState(12)
   const [userMainData, setUserMainData] = useState(null)
   const [userDailyActivities, setUserDailyActivities] = useState(null)
+  const [userAverageSessions, setUserAverageSessions] = useState(null)
+  const [userPerformance, setUserPerformance] = useState(null)
 
   const getUserMainData = async () => {
     let apiResults = {}
@@ -50,13 +45,39 @@ export default function Profile() {
     }
 
     const newUserDailyActivities = apiResults.data.sessions
-    console.log(newUserDailyActivities)
     setUserDailyActivities(newUserDailyActivities)
+  }
+
+  const getUserAverageSessions = async () => {
+    let apiResults = {}
+    try {
+      apiResults = await userAPI.getUserAverageSessions(userId)
+    } catch (err) {
+      console.log(err)
+      return
+    }
+    const newUserAverageSessions = apiResults.data.sessions
+    setUserAverageSessions(newUserAverageSessions)
+  }
+
+  const getUserPerformance = async () => {
+    let apiResults = {}
+    try {
+      apiResults = await userAPI.getUserPerformance(userId)
+    } catch (err) {
+      console.log(err)
+      return
+    }
+
+    const newUserPerformance = apiResults.data
+    setUserPerformance(newUserPerformance)
   }
 
   useEffect(() => {
     getUserMainData()
     getUserDailyActivities()
+    getUserAverageSessions()
+    getUserPerformance()
   }, [userId])
 
   return (
@@ -78,12 +99,16 @@ export default function Profile() {
           )}
 
           <div className={profileCSS.chartsBottom}>
-            <section id="session-duration" className={profileCSS.chartBottom}>
-              <SessionDurationChart data={USER_AVERAGE_SESSIONS[0].sessions} />
-            </section>
-            <section id="performance" className={profileCSS.chartBottom}>
-              <RadarChart performances={USER_PERFORMANCE[0]} />
-            </section>
+            {userAverageSessions && (
+              <section id="session-duration" className={profileCSS.chartBottom}>
+                <SessionDurationChart data={userAverageSessions} />
+              </section>
+            )}
+            {userPerformance && (
+              <section id="performance" className={profileCSS.chartBottom}>
+                <RadarChart performances={userPerformance} />
+              </section>
+            )}
             {userMainData && (
               <section id="score" className={profileCSS.chartBottom}>
                 <RadialChart score={userMainData.score} />

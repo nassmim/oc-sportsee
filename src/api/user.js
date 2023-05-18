@@ -20,6 +20,24 @@ const userAPI = {
       })
     return response.data
   },
+
+  getUserAverageSessions: async (id) => {
+    const response = await axios
+      .get(`${apiEnpointStart}/${id}/average-sessions`)
+      .catch((err) => {
+        throw new Error(err)
+      })
+    return response.data
+  },
+
+  getUserPerformance: async (id) => {
+    const response = await axios
+      .get(`${apiEnpointStart}/${id}/performance`)
+      .catch((err) => {
+        throw new Error(err)
+      })
+    return response.data
+  },
 }
 
 export default userAPI
