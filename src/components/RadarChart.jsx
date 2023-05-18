@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import {
   Radar,
   RadarChart,
@@ -20,6 +21,11 @@ const Container = styled.div`
   overflow: hidden;
 `
 
+/**
+ *
+ * @param { {userId: String || Number, kind: Object, data: {value: Number, kind: Number}[]} } performances
+ * @returns { ReactComponent } representing the user performances within a Radar chart
+ */
 export default function RadarChartCustom({ performances }) {
   function PolarAngleAxisCustom({ payload, x, y, cx, cy, ...rest }) {
     let yCustom = y
@@ -95,4 +101,8 @@ export default function RadarChartCustom({ performances }) {
       </ResponsiveContainer>
     </Container>
   )
+}
+
+RadarChartCustom.propTypes = {
+  performances: PropTypes.object,
 }

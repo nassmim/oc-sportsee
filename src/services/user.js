@@ -10,6 +10,11 @@ import {
 const isApiAvailable = true
 
 const services = {
+  /**
+   *
+   * @param { String || Number } userId
+   * @returns { Object } representing the user main information and diet stats
+   */
   getUserMainData: async (userId) => {
     let userMainData = {}
 
@@ -22,9 +27,21 @@ const services = {
       userMainData = USER_MAIN_DATA.filter((user) => user.id === userId)[0]
     }
 
+    // We noticed the objectives score property was not always named similarly
+    const score = (userMainData.todayScore || userMainData.score) * 100
+    userMainData = {
+      ...userMainData,
+      score: score,
+    }
+
     return userMainData
   },
 
+  /**
+   *
+   * @param { String || Number } userId
+   * @returns { Array } representing the user list of daily activity per day
+   */
   getUserDailyActivities: async (userId) => {
     let userActivities
     if (isApiAvailable) {
@@ -38,9 +55,14 @@ const services = {
       userActivities = USER_ACTIVITY.filter((user) => user.userId === userId)[0]
     }
 
-    return userActivities
+    return userActivities.sessions
   },
 
+  /**
+   *
+   * @param { String || Number } userId
+   * @returns { Array } representing the user list of average session per day
+   */
   getUserAverageSessions: async (userId) => {
     let userAverageSessions
     if (isApiAvailable) {
@@ -56,9 +78,14 @@ const services = {
       )[0]
     }
 
-    return userAverageSessions
+    return userAverageSessions.sessions
   },
 
+  /**
+   *
+   * @param { String || Number } userId
+   * @returns { Object } representing the user performances
+   */
   getUserPerformance: async (userId) => {
     let userPerformance = {}
 

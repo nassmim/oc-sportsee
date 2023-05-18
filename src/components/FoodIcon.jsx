@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import styled from "styled-components"
 
 const Container = styled.div`
@@ -40,6 +41,11 @@ const DataContainer = styled.p`
   }
 `
 
+/**
+ *
+ * @param {Object} icon corresponding to one type of diet statistic
+ * @returns { ReactComponent } reusable and representing a user key diet stat
+ */
 export default function FoodIcon({ icon }) {
   const { data, units, path, style, alt } = icon
 
@@ -57,4 +63,8 @@ export default function FoodIcon({ icon }) {
       </DataContainer>
     </Container>
   )
+}
+
+FoodIcon.propTypes = {
+  icon: PropTypes.object,
 }

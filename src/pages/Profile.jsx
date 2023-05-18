@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import userAPI from "../services/api/user.js"
 import services from "../services/user.js"
 
 import Diet from "../components/Diet.jsx"
@@ -27,59 +26,34 @@ export default function Profile() {
   const [userAvgSessions, setUserAvgSessions] = useState(null)
   const [userPerformance, setUserPerformance] = useState(null)
 
-  const getUserMainData = async () => {
-    let newUserData = {}
-    try {
-      newUserData = await services.getUserMainData(userId)
-    } catch (err) {
-      console.log(err)
-      return
-    }
-
-    const score = (newUserData.todayScore || newUserData.score) * 100
-    newUserData = {
-      ...newUserData,
-      score: score,
-    }
-
-    setUserMainData(newUserData)
+  /**
+   * Retrieves the user different types of information and updates the state
+   * @param { String || Number } userId
+   * @param { Function } serviceFunction
+   * @param { ReactSetStateFunction } setStateFunction
+   */
+  const getData = async (userId, serviceFunction, setStateFunction) => {
+    const newUserData = await services[serviceFunction](userId).catch((err) => {
+      throw new Error(err)
+    })
+    setStateFunction(newUserData)
   }
 
-  const getUserDailyActivities = async () => {
-    let newUserDailyActivities = {}
-    try {
-      newUserDailyActivities = await services.getUserDailyActivities(userId)
-    } catch (err) {
-      console.log(err)
-      return
-    }
-
-    newUserDailyActivities = newUserDailyActivities.sessions
-    setUserDailyActivities(newUserDailyActivities)
+  // Updates the state with the user main information and key diet statistics
+  const getUserMainData = () => {
+    getData(userId, "getUserMainData", setUserMainData)
   }
-
-  const getUserAverageSessions = async () => {
-    let newUserAvgSessions = {}
-    try {
-      newUserAvgSessions = await services.getUserAverageSessions(userId)
-    } catch (err) {
-      console.log(err)
-      return
-    }
-    newUserAvgSessions = newUserAvgSessions.sessions
-    setUserAvgSessions(newUserAvgSessions)
+  // Updates the state with the user daily activities per day
+  const getUserDailyActivities = () => {
+    getData(userId, "getUserDailyActivities", setUserDailyActivities)
   }
-
-  const getUserPerformance = async () => {
-    let newUserPerformance = {}
-    try {
-      newUserPerformance = await services.getUserPerformance(userId)
-    } catch (err) {
-      console.log(err)
-      return
-    }
-
-    setUserPerformance(newUserPerformance)
+  // Updates the state with the user average activity session per day
+  const getUserAverageSessions = () => {
+    getData(userId, "getUserAverageSessions", setUserAvgSessions)
+  }
+  // Updates the state with the user performances per type of indicator
+  const getUserPerformance = () => {
+    getData(userId, "getUserPerformance", setUserPerformance)
   }
 
   useEffect(() => {

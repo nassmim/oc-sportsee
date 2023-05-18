@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import {
   BarChart,
   Bar,
@@ -32,30 +33,26 @@ const Title = styled.h2`
   color: #20253a;
 `
 
+/**
+ *
+ * @param { {day: String, kilogram: Number, calories: Number }[] } data Array representing a session f
+ * @returns { ReactComponent } representing a Bar chart
+ */
 export default function BarChartCustom({ data }) {
-  const userActivityData = data.reduce((userActivity, session, index) => {
-    const sessionData = {
+  // Chart x-axis must start at one, so we increment position by 1 for each day
+  const dataForChart = data.map((session, index) => {
+    return {
       ...session,
       dayNumber: index + 1,
     }
+  })
 
-    if (userActivity.sessions)
-      userActivity.sessions = userActivity.sessions.concat(sessionData)
-    else userActivity.sessions = [sessionData]
-
-    if (!userActivity.weightMin || session.kilogram <= userActivity.weightMin)
-      userActivity.weightMin = session.kilogram
-    else if (
-      !userActivity.weightMax ||
-      session.kilogram > userActivity.weightMax
-    )
-      userActivity.weightMax = session.kilogram
-
-    return userActivity
-  }, [])
-
-  const chartData = userActivityData.sessions
-
+  /**
+   *
+   * @param {String} value
+   * @param {} entry Not used
+   * @returns { DomElement } corresponding to the chart legend
+   */
   const LegendTextCustom = (value, entry) => {
     const legendText = value === "kilogram" ? "Poids (kg)" : "Calories (kCal)"
 
@@ -74,6 +71,14 @@ export default function BarChartCustom({ data }) {
     )
   }
 
+  /**
+   *
+   * @param {Boolean} active
+   * @param {RechartsElement} payload containing information on the chart data point
+   * where the mouse is the closest
+   * @param {} label not used
+   * @returns { DomElement } corresponding to the chart data point tooltip
+   */
   const renderTooltipCustom = ({ active, payload, label }) => {
     if (active && payload && payload.length) {
       return (
@@ -95,8 +100,16 @@ export default function BarChartCustom({ data }) {
     return null
   }
 
+  /**
+   *
+   * @param { Number } x representing the horizontal position of the mouse relative to parent component
+   * @param { Number } y representing the vertical position of the mouse relative to parent component
+   * @param { Number } height representing the height of the tooltip wrapper
+   * @returns { DomElement } corresponding to the chart data point tooltip
+   */
   const TooltipCursorCustom = ({ x, y, height }) => {
     const widthCustom = 56
+    // value below been chosen so that the wrapper always surrounds equally the two bars
     const translateX = 21
     return (
       <Rectangle
@@ -114,7 +127,7 @@ export default function BarChartCustom({ data }) {
       <Title>Activité quotidienne</Title>
       <ResponsiveContainer>
         <BarChart
-          data={chartData}
+          data={dataForChart}
           barSize={7}
           margin={{
             right: 10,
@@ -125,8 +138,8 @@ export default function BarChartCustom({ data }) {
           <XAxis
             dataKey="dayNumber"
             type="number"
-            domain={[1, chartData.length]}
-            tickCount={chartData.length}
+            domain={[1, dataForChart.length]}
+            tickCount={dataForChart.length}
             axisLine={{
               stroke: "#DEDEDE",
               strokeWidth: "1px",
@@ -181,4 +194,8 @@ export default function BarChartCustom({ data }) {
       </ResponsiveContainer>
     </Container>
   )
+}
+
+BarChartCustom.propTypes = {
+  data: PropTypes.array,
 }

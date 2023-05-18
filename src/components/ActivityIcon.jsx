@@ -1,3 +1,5 @@
+import PropTypes from "prop-types"
+
 import activityIconCSS from "../css/activityIcon.module.css"
 export default function ActivityIcon({ img, alt, style }) {
   return (
@@ -7,4 +9,10 @@ export default function ActivityIcon({ img, alt, style }) {
       </div>
     </>
   )
+}
+
+ActivityIcon.propTypes = {
+  img: PropTypes.string,
+  alt: PropTypes.string,
+  style: PropTypes.object,
 }
