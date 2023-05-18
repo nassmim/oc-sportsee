@@ -1,0 +1,13 @@
+.welcomeTitle {
+  font-size: 48px;
+  margin-bottom: 25px;
+}
+
+.username {
+  color: red;
+}
+
+.greetings {
+  font-size: 18px;
+  font-weight: 400;
+}

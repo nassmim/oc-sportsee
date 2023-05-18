@@ -1,0 +1,9 @@
+.main {
+  display: flex;
+}
+
+.outlet {
+  padding-top: 55px;
+  padding-left: 110px;
+  padding-right: 90px;
+}

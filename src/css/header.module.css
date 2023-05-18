@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  column-gap: 10%;
+  padding: 20px 90px 15px 30px;
+  background-color: #000;
+}
+
+.logo {
+  width: 178px;
+  height: 61px;
+}
+
+.menu {
+  flex-grow: 1;
+}
+
+.links {
+  display: flex;
+  justify-content: space-between;
+}
+
+.link {
+  font-size: 24px;
+  color: #fff;
+}
+
+.activeLink {
+  text-decoration-line: underline;
+}
