@@ -1,0 +1,42 @@
+.welcome {
+  margin-bottom: 75px;
+}
+
+.welcomeTitle {
+  font-size: 48px;
+  margin-bottom: 25px;
+}
+
+.username {
+  color: red;
+}
+
+.welcomeGreetings {
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+}
+
+.charts {
+  display: flex;
+  flex-direction: column;
+  row-gap: 30px;
+  width: 75%;
+}
+
+.dailyActivity {
+  width: 100%;
+}
+
+.chartsBottom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.chartBottom {
+  width: 30%;
+}
