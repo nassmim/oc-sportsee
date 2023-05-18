@@ -11,6 +11,15 @@ const userAPI = {
       })
     return response.data
   },
+
+  getUserDailyActivities: async (id) => {
+    const response = await axios
+      .get(`${apiEnpointStart}/${id}/activity`)
+      .catch((err) => {
+        throw new Error(err)
+      })
+    return response.data
+  },
 }
 
 export default userAPI

@@ -17,30 +17,46 @@ import {
 
 export default function Profile() {
   const [userId, setUserId] = useState(12)
-  const [userMainData, setUserMainData] = useState({})
+  const [userMainData, setUserMainData] = useState(null)
+  const [userDailyActivities, setUserDailyActivities] = useState(null)
 
-  useEffect(() => {
-    const getUserMainData = async () => {
-      let userData = {}
-      try {
-        userData = await userAPI.getUserMainData(userId)
-      } catch (err) {
-        console.log(err)
-        return
-      }
-
-      userData = userData.data
-
-      const score = (userData.todayScore || userData.score) * 100
-      const newUserMainData = {
-        ...userData,
-        score: score,
-      }
-
-      setUserMainData(newUserMainData)
+  const getUserMainData = async () => {
+    let apiResults = {}
+    try {
+      apiResults = await userAPI.getUserMainData(userId)
+    } catch (err) {
+      console.log(err)
+      return
     }
 
+    let newUserData = apiResults.data
+
+    const score = (newUserData.todayScore || newUserData.score) * 100
+    newUserData = {
+      ...newUserData,
+      score: score,
+    }
+
+    setUserMainData(newUserData)
+  }
+
+  const getUserDailyActivities = async () => {
+    let apiResults = {}
+    try {
+      apiResults = await userAPI.getUserDailyActivities(userId)
+    } catch (err) {
+      console.log(err)
+      return
+    }
+
+    const newUserDailyActivities = apiResults.data.sessions
+    console.log(newUserDailyActivities)
+    setUserDailyActivities(newUserDailyActivities)
+  }
+
+  useEffect(() => {
     getUserMainData()
+    getUserDailyActivities()
   }, [userId])
 
   return (
@@ -55,9 +71,11 @@ export default function Profile() {
       </div>
       <div className={profileCSS.container}>
         <main className={profileCSS.charts}>
-          <section id="daily-activity" className={profileCSS.dailyActivity}>
-            <BarChart data={USER_ACTIVITY[0]} />
-          </section>
+          {userDailyActivities && (
+            <section id="daily-activity" className={profileCSS.dailyActivity}>
+              <BarChart data={userDailyActivities} />
+            </section>
+          )}
 
           <div className={profileCSS.chartsBottom}>
             <section id="session-duration" className={profileCSS.chartBottom}>
@@ -66,12 +84,14 @@ export default function Profile() {
             <section id="performance" className={profileCSS.chartBottom}>
               <RadarChart performances={USER_PERFORMANCE[0]} />
             </section>
-            <section id="score" className={profileCSS.chartBottom}>
-              <RadialChart score={userMainData.score} />
-            </section>
+            {userMainData && (
+              <section id="score" className={profileCSS.chartBottom}>
+                <RadialChart score={userMainData.score} />
+              </section>
+            )}
           </div>
         </main>
-        <Diet data={USER_MAIN_DATA[0].keyData} />
+        {userMainData && <Diet data={userMainData.keyData} />}
       </div>
     </>
   )

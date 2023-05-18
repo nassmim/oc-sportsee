@@ -33,29 +33,26 @@ const Title = styled.h2`
 `
 
 export default function BarChartCustom({ data }) {
-  const userActivityData = data.sessions.reduce(
-    (userActivity, session, index) => {
-      const sessionData = {
-        ...session,
-        dayNumber: index + 1,
-      }
+  const userActivityData = data.reduce((userActivity, session, index) => {
+    const sessionData = {
+      ...session,
+      dayNumber: index + 1,
+    }
 
-      if (userActivity.sessions)
-        userActivity.sessions = userActivity.sessions.concat(sessionData)
-      else userActivity.sessions = [sessionData]
+    if (userActivity.sessions)
+      userActivity.sessions = userActivity.sessions.concat(sessionData)
+    else userActivity.sessions = [sessionData]
 
-      if (!userActivity.weightMin || session.kilogram <= userActivity.weightMin)
-        userActivity.weightMin = session.kilogram
-      else if (
-        !userActivity.weightMax ||
-        session.kilogram > userActivity.weightMax
-      )
-        userActivity.weightMax = session.kilogram
+    if (!userActivity.weightMin || session.kilogram <= userActivity.weightMin)
+      userActivity.weightMin = session.kilogram
+    else if (
+      !userActivity.weightMax ||
+      session.kilogram > userActivity.weightMax
+    )
+      userActivity.weightMax = session.kilogram
 
-      return userActivity
-    },
-    []
-  )
+    return userActivity
+  }, [])
 
   const chartData = userActivityData.sessions
 
