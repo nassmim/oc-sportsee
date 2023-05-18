@@ -8,8 +8,19 @@ import RadarChart from "../components/RadarChart.jsx"
 import RadialChart from "../components/RadialChart.jsx"
 import profileCSS from "../css/profile.module.css"
 
+const profiles = [
+  {
+    id: 12,
+    name: "Karl",
+  },
+  {
+    id: 18,
+    name: "Cecilia",
+  },
+]
+
 export default function Profile() {
-  const [userId, setUserId] = useState(12)
+  const [userId, setUserId] = useState(profiles[0].id)
   const [userMainData, setUserMainData] = useState(null)
   const [userDailyActivities, setUserDailyActivities] = useState(null)
   const [userAverageSessions, setUserAverageSessions] = useState(null)
@@ -80,15 +91,31 @@ export default function Profile() {
     getUserPerformance()
   }, [userId])
 
+  const profileToDisplay = profiles.filter((user) => user.id !== userId)[0]
+
   return (
     <>
-      <div className={profileCSS.welcome}>
-        <h1 className={profileCSS.welcomeTitle}>
-          Bonjour <span className={profileCSS.username}>Thomas</span>
-        </h1>
-        <p className={profileCSS.welcomeGreetings}>
-          Félicitations ! Vous avez explosé vos objectifs hier 👏{" "}
-        </p>
+      <div className={profileCSS.profile}>
+        <div className={profileCSS.welcome}>
+          <h1 className={profileCSS.welcomeTitle}>
+            Bonjour{" "}
+            <span className={profileCSS.username}>
+              {userMainData?.userInfos.firstName}
+            </span>
+          </h1>
+          <p className={profileCSS.welcomeGreetings}>
+            Félicitations ! Vous avez explosé vos objectifs hier 👏{" "}
+          </p>
+        </div>
+
+        {profileToDisplay && (
+          <button
+            className={profileCSS.changeProfile}
+            onClick={() => setUserId(profileToDisplay.id)}
+          >
+            Voir profil {profileToDisplay.name}
+          </button>
+        )}
       </div>
       <div className={profileCSS.container}>
         <main className={profileCSS.charts}>

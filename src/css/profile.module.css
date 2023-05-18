@@ -1,4 +1,6 @@
-.welcome {
+.profile {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 75px;
 }
 
@@ -14,6 +16,13 @@
 .welcomeGreetings {
   font-size: 18px;
   font-weight: 400;
+}
+
+.changeProfile {
+  height: 100%;
+  padding: 10px;
+  background-color: #000;
+  color: #fff;
 }
 
 .container {
