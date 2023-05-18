@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import userAPI from "../api/user.js"
+import userAPI from "../services/api/user.js"
+import services from "../services/user.js"
 
 import Diet from "../components/Diet.jsx"
 import BarChart from "../components/BarChart.jsx"
@@ -23,19 +24,17 @@ export default function Profile() {
   const [userId, setUserId] = useState(profiles[0].id)
   const [userMainData, setUserMainData] = useState(null)
   const [userDailyActivities, setUserDailyActivities] = useState(null)
-  const [userAverageSessions, setUserAverageSessions] = useState(null)
+  const [userAvgSessions, setUserAvgSessions] = useState(null)
   const [userPerformance, setUserPerformance] = useState(null)
 
   const getUserMainData = async () => {
-    let apiResults = {}
+    let newUserData = {}
     try {
-      apiResults = await userAPI.getUserMainData(userId)
+      newUserData = await services.getUserMainData(userId)
     } catch (err) {
       console.log(err)
       return
     }
-
-    let newUserData = apiResults.data
 
     const score = (newUserData.todayScore || newUserData.score) * 100
     newUserData = {
@@ -47,40 +46,39 @@ export default function Profile() {
   }
 
   const getUserDailyActivities = async () => {
-    let apiResults = {}
+    let newUserDailyActivities = {}
     try {
-      apiResults = await userAPI.getUserDailyActivities(userId)
+      newUserDailyActivities = await services.getUserDailyActivities(userId)
     } catch (err) {
       console.log(err)
       return
     }
 
-    const newUserDailyActivities = apiResults.data.sessions
+    newUserDailyActivities = newUserDailyActivities.sessions
     setUserDailyActivities(newUserDailyActivities)
   }
 
   const getUserAverageSessions = async () => {
-    let apiResults = {}
+    let newUserAvgSessions = {}
     try {
-      apiResults = await userAPI.getUserAverageSessions(userId)
+      newUserAvgSessions = await services.getUserAverageSessions(userId)
     } catch (err) {
       console.log(err)
       return
     }
-    const newUserAverageSessions = apiResults.data.sessions
-    setUserAverageSessions(newUserAverageSessions)
+    newUserAvgSessions = newUserAvgSessions.sessions
+    setUserAvgSessions(newUserAvgSessions)
   }
 
   const getUserPerformance = async () => {
-    let apiResults = {}
+    let newUserPerformance = {}
     try {
-      apiResults = await userAPI.getUserPerformance(userId)
+      newUserPerformance = await services.getUserPerformance(userId)
     } catch (err) {
       console.log(err)
       return
     }
 
-    const newUserPerformance = apiResults.data
     setUserPerformance(newUserPerformance)
   }
 
@@ -126,9 +124,9 @@ export default function Profile() {
           )}
 
           <div className={profileCSS.chartsBottom}>
-            {userAverageSessions && (
+            {userAvgSessions && (
               <section id="session-duration" className={profileCSS.chartBottom}>
-                <SessionDurationChart data={userAverageSessions} />
+                <SessionDurationChart data={userAvgSessions} />
               </section>
             )}
             {userPerformance && (
